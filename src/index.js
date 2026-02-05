@@ -1,25 +1,17 @@
 import dotenv from 'dotenv';
-import express from 'express';
 import { connectDB } from './db/index.js';
+import { app } from './app.js';
 
 dotenv.config();
-const app=express();
-
-app.use(express.json());
-
-app.get('/',(req,res)=>{
-  res.send("this is home page")
-})
-
-const serverStart = async ()=>{
+const PORT=process.env.PORT || 4000;
+const serverStart =async ()=>{
   try {
-     await connectDB()
-     app.listen(process.env.PORT,()=>{
-      console.log(`your app is running on port-${process.env.PORT}`)
-     })
+     await connectDB();
+      app.listen(process.env.PORT,()=>{
+      console.log(`your server is running on PORT-:${process.env.PORT}`);
+   })
   } catch (error) {
-    console.log("error server failed !!",error)
+    console.log("error occur ",error)
   }
 }
-
-serverStart();
+serverStart()
